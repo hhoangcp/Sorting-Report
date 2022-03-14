@@ -11,10 +11,7 @@
 using namespace std;
 using namespace chrono;
 
-double a[1000006];
-int n;
-
-void Quick_Sort(int Left, int Right) {
+void Quick_Sort(double a[], int Left, int Right) {
     if (Left >= Right) return;
     double val = a[Left + rand() % (Right - Left + 1)];
 
@@ -29,9 +26,12 @@ void Quick_Sort(int Left, int Right) {
         } 
     } while (i <= j);
 
-    Quick_Sort(Left, j);
-    Quick_Sort(i, Right);
+    Quick_Sort(a, Left, j);
+    Quick_Sort(a, i, Right);
 } 
+
+double a[1000006];
+int n;
 
 int main() {
     freopen("Sorting.inp", "r", stdin);
@@ -43,7 +43,7 @@ int main() {
     for(int i = 0; i < n; ++i) cin >> a[i];
 
     auto Start = high_resolution_clock::now();
-    Quick_Sort(0, n-1);
+    Quick_Sort(a, 0, n-1);
     auto End = high_resolution_clock::now();
 
     auto elapsed = duration_cast<milliseconds>(End - Start);
@@ -52,6 +52,7 @@ int main() {
     for(int i = 0; i < n - 1; ++i) assert(a[i] <= a[i+1]);
 
     for(int i = 0; i < n; ++i) cout << fixed << setprecision(6) << a[i] << ' ';
+    cout << '\n';
 
     return 0;
 }
