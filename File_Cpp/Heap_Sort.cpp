@@ -11,10 +11,7 @@
 using namespace std;
 using namespace chrono;
 
-double a[1000006];
-int n;
-
-void Heapify(int idx, int End) {
+void Heapify(double a[], int idx, int End) {
     while (idx < End) {
         int p = idx;
         int l = (idx << 1) + 1, r = (idx << 1) + 2;
@@ -29,11 +26,14 @@ void Heapify(int idx, int End) {
     }
 }
 
-void Heap_Sort() {
-    for(int idx = (n >> 1) - 1; idx >= 0; --idx) Heapify(idx, n);
+double a[1000006];
+int n;
+
+void Heap_Sort(double a[], int n) {
+    for(int idx = (n >> 1) - 1; idx >= 0; --idx) Heapify(a, idx, n);
     for(int idx = n - 1; idx > 0; --idx) {
         swap(a[0], a[idx]);
-        Heapify(0, idx);
+        Heapify(a, 0, idx);
     }
 }
 
@@ -47,7 +47,7 @@ int main() {
     for(int i = 0; i < n; ++i) cin >> a[i];
 
     auto Start = high_resolution_clock::now();
-    Heap_Sort();
+    Heap_Sort(a, n);
     auto End = high_resolution_clock::now();
 
     auto elapsed = duration_cast<milliseconds>(End - Start);
@@ -56,6 +56,7 @@ int main() {
     for(int i = 0; i < n - 1; ++i) assert(a[i] <= a[i+1]);
 
     for(int i = 0; i < n; ++i) cout << fixed << setprecision(6) << a[i] << ' ';
+    cout << '\n';
 
     return 0;
 }
